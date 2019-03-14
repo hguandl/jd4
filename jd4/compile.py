@@ -148,6 +148,7 @@ async def _interpreter_build(interpreter, code):
     return interpreter.build(code), '', 0, 0
 
 async def build(lang, code):
+    print(_langs)
     build_fn = _langs.get(lang)
     print(build_fn)
     if not build_fn:
