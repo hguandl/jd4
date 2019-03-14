@@ -149,12 +149,13 @@ async def _interpreter_build(interpreter, code):
 
 async def build(lang, code):
     build_fn = _langs.get(lang)
+    print(build_fn)
     if not build_fn:
         raise SystemError('Unsupported language: {}'.format(lang))
     #return await build_fn(code)
     package = await build_fn(code)
-    if lang == 'java':
-        package.time_factor = 2
+    # if lang == 'java':
+    #     package.time_factor = 2
     return package
 
 def _init():
