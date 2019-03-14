@@ -48,6 +48,7 @@ class Package:
         self.package_dir = package_dir
         self.execute_file = execute_file
         self.execute_args = execute_args
+        self.time_factor = 1
 
     def __del__(self):
         rmtree(self.package_dir)
@@ -152,9 +153,8 @@ async def build(lang, code):
         raise SystemError('Unsupported language: {}'.format(lang))
     #return await build_fn(code)
     package = await build_fn(code)
-    package.extra_time = 1
     if lang == 'java':
-        package.extra_time = 2
+        package.time_factor = 2
     return package
 
 def _init():
