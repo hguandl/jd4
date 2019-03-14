@@ -150,7 +150,12 @@ async def build(lang, code):
     build_fn = _langs.get(lang)
     if not build_fn:
         raise SystemError('Unsupported language: {}'.format(lang))
-    return await build_fn(code)
+    #return await build_fn(code)
+    package = await build_fn(code)
+    package.extra_time = 1
+    if lang == 'java':
+        package.extra_time = 2
+    return package
 
 def _init():
     try:

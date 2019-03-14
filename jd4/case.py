@@ -59,8 +59,8 @@ class CaseBase:
                     read_pipe(stderr_file, MAX_STDERR_SIZE),
                     wait_cgroup(cgroup_sock,
                                 execute_task,
-                                self.time_limit_ns,
-                                self.time_limit_ns,
+                                self.time_limit_ns * package.extra_time,
+                                self.time_limit_ns * package.extra_time,
                                 self.memory_limit_bytes,
                                 self.process_limit))
                 execute_status = await execute_task
@@ -69,7 +69,7 @@ class CaseBase:
             if memory_usage_bytes >= self.memory_limit_bytes:
                 status = STATUS_MEMORY_LIMIT_EXCEEDED
                 score = 0
-            elif time_usage_ns >= self.time_limit_ns:
+            elif time_usage_ns >= self.time_limit_ns * package.extra_time:
                 status = STATUS_TIME_LIMIT_EXCEEDED
                 score = 0
             elif execute_status:
