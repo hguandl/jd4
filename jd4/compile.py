@@ -18,7 +18,7 @@ from jd4.util import parse_memory_bytes, parse_time_ns, \
 _MAX_OUTPUT = 8192
 DEFAULT_TIME = '20s'
 DEFAULT_MEMORY = '256m'
-PROCESS_LIMIT = 64
+PROCESS_LIMIT = 256
 _CONFIG_DIR = user_config_dir('jd4')
 _LANGS_FILE = path.join(_CONFIG_DIR, 'langs.yaml')
 _langs = dict()
@@ -148,9 +148,7 @@ async def _interpreter_build(interpreter, code):
     return interpreter.build(code), '', 0, 0
 
 async def build(lang, code):
-    print(_langs)
     build_fn = _langs.get(lang)
-    print(build_fn)
     if not build_fn:
         raise SystemError('Unsupported language: {}'.format(lang))
     package = await build_fn(code)
