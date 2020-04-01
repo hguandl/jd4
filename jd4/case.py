@@ -61,12 +61,12 @@ class CaseBase:
                                 execute_task,
                                 self.time_limit_ns * package.time_factor,
                                 self.time_limit_ns * package.time_factor,
-                                self.memory_limit_bytes,
+                                self.memory_limit_bytes * package.time_factor,
                                 self.process_limit))
                 execute_status = await execute_task
                 _, correct, stderr, (time_usage_ns, memory_usage_bytes) = \
                     await others_task
-            if memory_usage_bytes >= self.memory_limit_bytes:
+            if memory_usage_bytes >= self.memory_limit_bytes * package.time_factor:
                 status = STATUS_MEMORY_LIMIT_EXCEEDED
                 score = 0
             elif time_usage_ns >= self.time_limit_ns * package.time_factor:
